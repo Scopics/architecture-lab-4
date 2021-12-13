@@ -25,9 +25,12 @@ func (cq *commandQueue) push(cmd Command) {
 func (cq *commandQueue) pull() Command {
 	cq.Lock()
 	defer cq.Unlock()
+
 	if len(cq.cmds) == 0 {
 		cq.noCommand = true
+		cq.Unlock()
 		<-cq.pushed
+		cq.Lock()
 	}
 
 	cmd := cq.cmds[0]
