@@ -51,8 +51,13 @@ func setField(field reflect.Value, str string) error {
 }
 
 func setArgs(cmdReflection reflect.Value, args []string) error {
+	cmdReflectionElem := cmdReflection.Elem()
+	if cmdReflectionElem.NumField() != len(args) {
+		return fmt.Errorf("error: wrong number of arguments")
+	}
+
 	for i, v := range args {
-		field := cmdReflection.Elem().Field(i)
+		field := cmdReflectionElem.Field(i)
 		err := setField(field, v)
 		if err != nil {
 			return err

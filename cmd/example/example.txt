@@ -1,1 +1,2 @@
-subtract 5 a
+multiply 5 4
+print Hello!
