@@ -9,7 +9,7 @@ import (
 type Parser struct {
 }
 
-func (p *Parser) getCommand(commandName string, params []string) engine.Command {
+func (p *Parser) GetCommand(commandName string, params []string) engine.Command {
 	switch commandName {
 	case "print":
 		return &print{Arg: strings.Join(params, " ")}
@@ -19,9 +19,9 @@ func (p *Parser) getCommand(commandName string, params []string) engine.Command 
 
 }
 
-func (p *Parser) parse(line string) engine.Command {
+func (p *Parser) Parse(line string) engine.Command {
 	splittedLine := strings.Fields(line)
 
 	command, params := splittedLine[0], splittedLine[1:]
-	return p.getCommand(command, params)
+	return p.GetCommand(command, params)
 }
