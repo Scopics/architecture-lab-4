@@ -47,6 +47,14 @@ func (cq *commandQueue) length() int {
 	return len(cq.cmds)
 }
 
+type cmdExecutor struct {
+	executor func()
+}
+
+func (ce *cmdExecutor) Execute(h Handler) {
+	ce.executor()
+}
+
 type EventLoop struct {
 	queue        *commandQueue
 	awaitFinish  bool
@@ -70,14 +78,6 @@ func (el *EventLoop) Start() {
 
 func (el *EventLoop) Post(cmd Command) {
 	el.queue.push(cmd)
-}
-
-type cmdExecutor struct {
-	executor func()
-}
-
-func (ce *cmdExecutor) Execute(h Handler) {
-	ce.executor()
 }
 
 func (el *EventLoop) AwaitFinish() {
