@@ -25,14 +25,19 @@ var commandsArr = []engine.Command{
 
 func setField(field reflect.Value, str string) error {
 	var val interface{}
+	var err error
 
 	switch field.Type().Name() {
 	case "int":
-		val, _ = strconv.Atoi(str)
+		val, err = strconv.Atoi(str)
 	case "float":
-		val, _ = strconv.ParseFloat(str, 32)
+		val, err = strconv.ParseFloat(str, 32)
 	default:
 		val = str
+	}
+
+	if err != nil {
+		return err
 	}
 
 	if field.Type() != reflect.ValueOf(val).Type() {
@@ -44,16 +49,16 @@ func setField(field reflect.Value, str string) error {
 	return nil
 }
 
-func checkArgs(cmdReflection reflect.Value, args []string) bool {
+func setArgs(cmdReflection reflect.Value, args []string) error {
 	for i, v := range args {
 		field := cmdReflection.Elem().Field(i)
 		err := setField(field, v)
 		if err != nil {
-			fmt.Println("err")
+			return err
 		}
 	}
 
-	return true
+	return nil
 
 }
 
@@ -64,10 +69,13 @@ func Compose(cmdName string, args []string) engine.Command {
 		commandValue := reflect.ValueOf(v)
 		name := commandValue.Elem().Type().Name()
 		if cmdName == name {
-			if checkArgs(commandValue, args) {
+			err := setArgs(commandValue, args)
+			if err == nil {
 				command = v
-				break
+			} else {
+				command = &print{Arg: fmt.Sprintf("SYNTAX ERROR: %s", err)}
 			}
+			break
 		}
 	}
 
