@@ -1,2 +1,1 @@
 print hi
-add 3 4

@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/Scopics/architecture-lab-4/commands"
 	"github.com/Scopics/architecture-lab-4/engine"
 )
 
@@ -24,10 +25,11 @@ func main() {
 	eventLoop := new(engine.EventLoop)
 	eventLoop.Start()
 
+	parser := commands.Parser{}
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		commandLine := scanner.Text()
-		cmd := parse(commandLine)
+		cmd := parser.Parse(commandLine)
 		eventLoop.Post(cmd)
 	}
 
