@@ -1,1 +1,1 @@
-print hi
+subtract 5 2

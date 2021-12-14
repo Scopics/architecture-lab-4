@@ -25,11 +25,10 @@ func main() {
 	eventLoop := new(engine.EventLoop)
 	eventLoop.Start()
 
-	parser := commands.Parser{}
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
 		commandLine := scanner.Text()
-		cmd := parser.Parse(commandLine)
+		cmd := commands.Parse(commandLine)
 		eventLoop.Post(cmd)
 	}
 
