@@ -7,11 +7,11 @@ import (
 )
 
 type delete struct {
-	arg    string
-	symbol string
+	Arg    string
+	Symbol string
 }
 
 func (p *delete) Execute(loop engine.Handler) {
-	res := strings.ReplaceAll(p.arg, p.symbol, "")
+	res := strings.ReplaceAll(p.Arg, p.Symbol, "")
 	loop.Post(&print{Arg: res})
 }

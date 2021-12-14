@@ -9,12 +9,12 @@ import (
 )
 
 type sha struct {
-	arg string
+	Arg string
 }
 
 func (p *sha) Execute(loop engine.Handler) {
 	h := sha1.New()
-	io.WriteString(h, p.arg)
+	io.WriteString(h, p.Arg)
 	res := fmt.Sprintf("% x", h.Sum(nil))
 	loop.Post(&print{Arg: res})
 }

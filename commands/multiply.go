@@ -7,10 +7,10 @@ import (
 )
 
 type multiply struct {
-	arg1, arg2 int
+	Arg1, Arg2 int
 }
 
 func (p *multiply) Execute(loop engine.Handler) {
-	res := p.arg1 * p.arg2
+	res := p.Arg1 * p.Arg2
 	loop.Post(&print{Arg: strconv.Itoa(res)})
 }

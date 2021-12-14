@@ -5,12 +5,12 @@ import (
 )
 
 type reverse struct {
-	arg string
+	Arg string
 }
 
 func (p *reverse) Execute(loop engine.Handler) {
 	var res string
-	for _, v := range p.arg {
+	for _, v := range p.Arg {
 		res = string(v) + res
 	}
 	loop.Post(&print{Arg: res})

@@ -5,10 +5,10 @@ import (
 )
 
 type cat struct {
-	arg1, arg2 string
+	Arg1, Arg2 string
 }
 
 func (p *cat) Execute(loop engine.Handler) {
-	res := p.arg1 + p.arg2
+	res := p.Arg1 + p.Arg2
 	loop.Post(&print{Arg: res})
 }

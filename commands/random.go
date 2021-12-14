@@ -8,7 +8,6 @@ import (
 )
 
 type random struct {
-	arg1, arg2 int
 }
 
 func (p *random) Execute(loop engine.Handler) {

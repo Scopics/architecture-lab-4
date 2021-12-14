@@ -7,12 +7,12 @@ import (
 )
 
 type split struct {
-	arg string
-	sep string
+	Arg string
+	Sep string
 }
 
 func (p *split) Execute(loop engine.Handler) {
-	res := strings.Split(p.arg, p.sep)
+	res := strings.Split(p.Arg, p.Sep)
 	for _, v := range res {
 		loop.Post(&print{Arg: v})
 	}

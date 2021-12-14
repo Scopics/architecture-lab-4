@@ -7,11 +7,11 @@ import (
 )
 
 type printc struct {
-	c   int
-	arg string
+	C   int
+	Arg string
 }
 
 func (p *printc) Execute(loop engine.Handler) {
-	res := strings.Repeat(p.arg, p.c)
+	res := strings.Repeat(p.Arg, p.C)
 	loop.Post(&print{Arg: res})
 }
