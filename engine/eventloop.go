@@ -26,7 +26,7 @@ func (cq *commandQueue) pull() Command {
 	cq.Lock()
 	defer cq.Unlock()
 
-	if cq.length() == 0 {
+	if len(cq.cmds) == 0 {
 		cq.noCommand = true
 		cq.Unlock()
 		<-cq.pushed
@@ -81,7 +81,7 @@ func (ce *cmdExecutor) Execute(h Handler) {
 }
 
 func (el *EventLoop) AwaitFinish() {
-	finish := &cmdExecutor{func() { el.awaitFinish = false }}
+	finish := &cmdExecutor{func() { el.awaitFinish = true }}
 	el.Post(finish)
 
 	<-el.finishSignal
