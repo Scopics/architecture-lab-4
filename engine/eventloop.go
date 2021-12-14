@@ -26,7 +26,7 @@ func (cq *commandQueue) pull() Command {
 	cq.Lock()
 	defer cq.Unlock()
 
-	if len(cq.cmds) == 0 {
+	if cq.length() == 0 {
 		cq.noCommand = true
 		cq.Unlock()
 		<-cq.pushed
@@ -38,6 +38,13 @@ func (cq *commandQueue) pull() Command {
 	cq.cmds = cq.cmds[1:]
 
 	return cmd
+}
+
+func (cq *commandQueue) length() int {
+	cq.Lock()
+	defer cq.Unlock()
+
+	return len(cq.cmds)
 }
 
 type EventLoop struct {
@@ -53,7 +60,7 @@ func (el *EventLoop) Start() {
 	el.finishSignal = make(chan struct{})
 
 	go func() {
-		for !(el.awaitFinish && len(el.queue.cmds) == 0) {
+		for !(el.awaitFinish && el.queue.length() == 0) {
 			cmd := el.queue.pull()
 			cmd.Execute(el)
 		}
