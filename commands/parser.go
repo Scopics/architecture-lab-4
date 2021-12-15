@@ -22,6 +22,7 @@ var commandsArr = []engine.Command{
 	&sha{},
 	&split{},
 	&subtract{},
+	&sha{},
 }
 
 func setField(field reflect.Value, str string) error {

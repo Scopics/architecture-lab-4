@@ -3,9 +3,11 @@ print Hello!
 add 1 1
 cat cat cat
 palindrom palindrom
+random
 printc 5 i
 reverse reverse
-sha1 sha1
 split a:b:er:w: :
 delete delete e
-substract 10 5
+sha hello
+subtract 10 5
+palindrom mordnilap
