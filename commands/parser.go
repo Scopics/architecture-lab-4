@@ -68,7 +68,7 @@ func setArgs(cmdReflection reflect.Value, args []string) error {
 
 }
 
-func Compose(cmdName string, args []string) engine.Command {
+func compose(cmdName string, args []string) engine.Command {
 	var command engine.Command
 
 	for _, v := range commandsArr {
@@ -96,5 +96,5 @@ func Parse(line string) engine.Command {
 	splittedLine := strings.Fields(line)
 
 	command, params := splittedLine[0], splittedLine[1:]
-	return Compose(command, params)
+	return compose(command, params)
 }
