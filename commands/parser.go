@@ -69,6 +69,19 @@ func setArgs(cmdReflection reflect.Value, args []string) error {
 
 }
 
+func clone(oldObj interface{}) interface{} {
+	newObj := reflect.New(reflect.TypeOf(oldObj).Elem())
+	oldVal := reflect.ValueOf(oldObj).Elem()
+	newVal := newObj.Elem()
+	for i := 0; i < oldVal.NumField(); i++ {
+		newValField := newVal.Field(i)
+		if newValField.CanSet() {
+			newValField.Set(oldVal.Field(i))
+		}
+	}
+	return newObj.Interface()
+}
+
 func compose(cmdName string, args []string) engine.Command {
 	var command engine.Command
 
@@ -78,7 +91,7 @@ func compose(cmdName string, args []string) engine.Command {
 		if cmdName == name {
 			err := setArgs(commandValue, args)
 			if err == nil {
-				command = v
+				command = clone(v).(engine.Command)
 			} else {
 				command = &print{Arg: fmt.Sprintf("SYNTAX ERROR: %s", err)}
 			}
